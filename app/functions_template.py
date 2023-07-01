@@ -4,25 +4,31 @@ import region
 import utils
 
 
-    return None
 def douglasPeucker(traj: Trajectory, epsilon) -> Trajectory:
+    # TODO
+    return Trajectory(0)
 
 
-    return None
 def slidingWindow(traj: Trajectory, epsilon) -> Trajectory:
+    # TODO
+    return Trajectory(0)
 
 
-    return None
 def closestPairDistance(traj0: Trajectory, traj1: Trajectory) -> float:
+    # TODO
+    return 0.0
 
 
-    return None
 def dynamicTimeWarping(traj0: Trajectory, traj1: Trajectory) -> float:
+    # TODO
+    return 0.0
 
 
 def solveQueryWithRTree(r: region, trajectories: list) -> list:
-    return None
+    # TODO
+    return []
 
 
 def solveQueryWithoutRTree(r: region, trajectories: list) -> list:
-    return None
+    # TODO
+    return []

@@ -3,9 +3,12 @@ from point import Point
 
 class Trajectory:
     # Initialization method of trajectory with an unique id
-    def __init__(self, number):
+    def __init__(self, number: int, points: list[Point] = None):
         self.number = number
         self.points = []
+        if points is not None:
+            for point in points:
+                self.addPoint(point)
 
     def __repr__(self) -> str:
         # Nice printing of trajectory

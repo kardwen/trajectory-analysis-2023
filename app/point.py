@@ -10,4 +10,3 @@ class point():
     # Nice printing of point
     def __str__(self) -> str:
         return '(' + str(self.X) + ',' + str(self.Y) + ',' + str(self.timestamp) + ')'
-    

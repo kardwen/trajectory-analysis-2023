@@ -9,4 +9,3 @@ class region():
     # Checks if point lies in region
     def pointInRegion(self,queryPoint:point) -> bool:
         return None
-    

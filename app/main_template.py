@@ -1,11 +1,13 @@
-# imports
+from pathlib import Path
+
 import point
 import region
 import utils
 import functions_template as functions
 
 # Import trajectories
-listOfTrajectories = utils.importTrajectories("Trajectories")
+trajectories_dir = Path.cwd() / "data" / "trajectories"
+listOfTrajectories = utils.importTrajectories(str(trajectories_dir))
 print(listOfTrajectories)
 
 # Visualize trajectories

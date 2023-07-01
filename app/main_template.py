@@ -1,4 +1,6 @@
 from pathlib import Path
+import matplotlib
+import matplotlib.pyplot as plt
 
 from point import Point
 from region import Region
@@ -8,9 +10,25 @@ import functions_template as functions
 # Import trajectories
 trajectories_dir = Path.cwd() / "data" / "trajectories"
 listOfTrajectories = utils.importTrajectories(str(trajectories_dir))
-print(listOfTrajectories)
+# print(listOfTrajectories)
 
 # Visualize trajectories
+colorMap = matplotlib.colormaps["viridis"]
+for i, trajectory in enumerate(listOfTrajectories):
+    x = [point.x for point in trajectory.points]
+    y = [point.y for point in trajectory.points]
+    plt.plot(
+        x,
+        y,
+        color=colorMap(i / len(listOfTrajectories)),
+        label=f"Trajectory {str(trajectory.number)}",
+    )
+
+plt.title("2D Trajectories")
+plt.xlabel("x")
+plt.ylabel("y")
+plt.grid(True)
+plt.show()
 
 # Simplify at least one of the trajectories with Douglas Peucker
 # and/or Sliding Window Algorithm

@@ -1,6 +1,8 @@
 # trajectory-analysis-2023
 
-## Setup
+## Installation
+
+Make sure that you have Python 3.6 or higher installed
 
 Create a virtual environment:
 
@@ -14,4 +16,18 @@ Install required packages in the newly created virtual environment:
 
 ```
 pip install -r requirements.txt
+```
+
+## Run
+
+Run program:
+
+```
+python main_template.py
+```
+
+Run tests:
+
+```
+python test.py
 ```

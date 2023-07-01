@@ -1,23 +1,23 @@
-from trajectory import trajectory
-from point import point
+from trajectory import Trajectory
+from point import Point
 import region
 import utils
 
 
-def douglasPeucker(traj: trajectory, epsilon) -> trajectory:
     return None
+def douglasPeucker(traj: Trajectory, epsilon) -> Trajectory:
 
 
-def slidingWindow(traj: trajectory, epsilon) -> trajectory:
     return None
+def slidingWindow(traj: Trajectory, epsilon) -> Trajectory:
 
 
-def closestPairDistance(traj0: trajectory, traj1: trajectory) -> float:
     return None
+def closestPairDistance(traj0: Trajectory, traj1: Trajectory) -> float:
 
 
-def dynamicTimeWarping(traj0: trajectory, traj1: trajectory) -> float:
     return None
+def dynamicTimeWarping(traj0: Trajectory, traj1: Trajectory) -> float:
 
 
 def solveQueryWithRTree(r: region, trajectories: list) -> list:

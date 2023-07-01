@@ -1,12 +1,12 @@
-from point import point
+from point import Point
 
 
-class region:
+class Region:
     # Initialization method of region
-    def __init__(self, center: point, radius: float) -> None:
+    def __init__(self, center: Point, radius: float) -> None:
         self.center = center
         self.radius = radius
 
     # Checks if point lies in region
-    def pointInRegion(self, queryPoint: point) -> bool:
+    def pointInRegion(self, queryPoint: Point) -> bool:
         return None

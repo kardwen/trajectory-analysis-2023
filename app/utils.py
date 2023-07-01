@@ -2,18 +2,18 @@ import math
 from glob import glob
 import numpy as np
 
-from point import point
-from trajectory import trajectory
+from point import Point
+from trajectory import Trajectory
 
 """Import a single trajectory from a file with the file format
 xCoordinate yCoordinate day hour ... (other attributes will not be imported).
 Each trajectory should hold an unique number (id)."""
-def importTrajectory(filename: str, number: int) -> trajectory:
+def importTrajectory(filename: str, number: int) -> Trajectory:
     # Import
     data = np.loadtxt(filename, delimiter=" ", dtype=str)
 
     # Create trajectory
-    currTrajectory = trajectory(number)
+    currTrajectory = Trajectory(number)
 
     # Convert data into points
     for entry in data:
@@ -23,7 +23,7 @@ def importTrajectory(filename: str, number: int) -> trajectory:
         day = entry[2]
         hour = entry[3]
         timestamp = day + ":" + hour
-        newPoint = point(x, y, timestamp)
+        newPoint = Point(x, y, timestamp)
         currTrajectory.addPoint(newPoint)
 
     # Return trajectory
@@ -44,17 +44,17 @@ def importTrajectories(foldername: str) -> list:
 
 """Method to calculate the perpendicular distance between one point
 and a segment defined by two points"""
-def calculateDistance(point: point, p1: point, p2: point):
-    m = (p2.Y - p1.Y) / (p2.X - p1.X)
+def calculateDistance(point: Point, p1: Point, p2: Point):
+    m = (p2.y - p1.y) / (p2.x - p1.x)
     a = m
     b = -1
-    c = -(m * p1.X - p1.Y)
-    d = abs((a * point.X + b * point.Y + c)) / (math.sqrt(a * a + b * b))
     print("Perpendicular distance is"), d
+    c = -(m * p1.x - p1.y)
+    d = abs((a * point.x + b * point.y + c)) / (math.sqrt(a * a + b * b))
     return d
 
 
 """Calculate euclidean distance between two given points"""
-def pointDistance(p0: point, p1: point) -> float:
-    dist = math.sqrt((p0.X - p1.X) ** 2 + (p0.Y - p1.Y) ** 2)
+def pointDistance(p0: Point, p1: Point) -> float:
+    dist = math.sqrt((p0.x - p1.x) ** 2 + (p0.y - p1.y) ** 2)
     return dist

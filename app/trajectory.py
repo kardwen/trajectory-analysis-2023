@@ -1,7 +1,7 @@
-from point import point
+from point import Point
 
 
-class trajectory:
+class Trajectory:
     # Initialization method of trajectory with an unique id
     def __init__(self, number):
         self.number = number
@@ -15,5 +15,5 @@ class trajectory:
         return resultString
 
     # Adds a point to the list of points of the trajectory
-    def addPoint(self, p: point) -> None:
+    def addPoint(self, p: Point) -> None:
         self.points.append(p)

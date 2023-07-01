@@ -55,7 +55,7 @@ def calculateDistance(point: Point, p1: Point, p2: Point):
     b = -1
     c = -(m * p1.x - p1.y)
     d = abs((a * point.x + b * point.y + c)) / (math.sqrt(a * a + b * b))
-    print("Perpendicular distance is ", d)
+    # print("Perpendicular distance is ", d)
     return d
 
 

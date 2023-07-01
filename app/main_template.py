@@ -1,4 +1,5 @@
 from pathlib import Path
+import numpy as np
 import matplotlib
 import matplotlib.pyplot as plt
 
@@ -14,13 +15,14 @@ listOfTrajectories = utils.importTrajectories(str(trajectories_dir))
 
 # Visualize trajectories
 colorMap = matplotlib.colormaps["viridis"]
+colors = [*map(colorMap, np.linspace(0, 1, len(listOfTrajectories)))]
 for i, trajectory in enumerate(listOfTrajectories):
     x = [point.x for point in trajectory.points]
     y = [point.y for point in trajectory.points]
     plt.plot(
         x,
         y,
-        color=colorMap(i / len(listOfTrajectories)),
+        color=colors[i],
         label=f"Trajectory {str(trajectory.number)}",
     )
 

@@ -33,7 +33,7 @@ def importTrajectory(filename: str, number: int) -> Trajectory:
     return currTrajectory
 
 
-def importTrajectories(foldername: str) -> list:
+def importTrajectories(foldername: str) -> list[Trajectory]:
     """Import the given set of 62 with indexes between 1 and 96 trajectories"""
 
     listOfTrajectories = []
@@ -46,7 +46,7 @@ def importTrajectories(foldername: str) -> list:
     return listOfTrajectories
 
 
-def calculateDistance(point: Point, p1: Point, p2: Point):
+def calculateDistance(point: Point, p1: Point, p2: Point) -> float:
     """Method to calculate the perpendicular distance between one point
     and a segment defined by two points"""
 

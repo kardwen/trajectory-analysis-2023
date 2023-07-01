@@ -1,7 +1,7 @@
-from trajectory import Trajectory
-from point import Point
-import region
-import utils
+from app.trajectory import Trajectory
+from app.point import Point
+from app.region import Region
+from app import utils
 
 
 def douglasPeucker(traj: Trajectory, epsilon: float) -> Trajectory:
@@ -47,11 +47,11 @@ def dynamicTimeWarping(traj0: Trajectory, traj1: Trajectory) -> float:
     return 0.0
 
 
-def solveQueryWithRTree(r: region, trajectories: list) -> list:
+def solveQueryWithRTree(r: Region, trajectories: list) -> list:
     # TODO
     return []
 
 
-def solveQueryWithoutRTree(r: region, trajectories: list) -> list:
+def solveQueryWithoutRTree(r: Region, trajectories: list) -> list:
     # TODO
     return []

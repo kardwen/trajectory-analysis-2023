@@ -2,8 +2,8 @@ import math
 from glob import glob
 import numpy as np
 
-from point import Point
-from trajectory import Trajectory
+from app.point import Point
+from app.trajectory import Trajectory
 
 
 def importTrajectory(filename: str, number: int) -> Trajectory:

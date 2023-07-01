@@ -1,4 +1,4 @@
-from point import Point
+from app.point import Point
 
 
 class Trajectory:

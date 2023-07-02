@@ -8,3 +8,13 @@ class Point:
     # Nice printing of point
     def __str__(self) -> str:
         return "(" + str(self.x) + "," + str(self.y) + "," + str(self.timestamp) + ")"
+
+    # Test for equality of points
+    def __eq__(self, other):
+        if isinstance(other, Point):
+            return (
+                self.x == other.x
+                and self.y == other.y
+                and self.timestamp == other.timestamp
+            )
+        return False

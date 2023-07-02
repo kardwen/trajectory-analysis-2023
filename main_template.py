@@ -19,49 +19,49 @@ listOfTrajectories = utils.importTrajectories(str(trajectories_dir))
 colorMap = matplotlib.colormaps["viridis"]
 colors = [*map(colorMap, np.linspace(0, 1, len(listOfTrajectories)))]
 
-plt.figure()
-plt.gca().set_aspect('equal', adjustable='box')
+figure = plt.figure()
 
-for i, trajectory in enumerate(listOfTrajectories):
-    x = [point.x for point in trajectory.points]
-    y = [point.y for point in trajectory.points]
+for i, origTrajectory in enumerate(listOfTrajectories):
+    x = [point.x for point in origTrajectory.points]
+    y = [point.y for point in origTrajectory.points]
     plt.plot(
         x,
         y,
         color=colors[i],
-        label=f"Trajectory {trajectory.number}",
+        label=f"Trajectory {origTrajectory.number}",
     )
 
 plt.title("2D Trajectories")
 plt.xlabel("x")
 plt.ylabel("y")
 plt.grid(True)
+plt.axis("equal")
+figure.tight_layout()
 plt.show(block=True)
 
 
 # Simplify at least one of the trajectories with Douglas Peucker
 # and/or Sliding Window Algorithm
-trajectory = listOfTrajectories[4]
-print(f"Original trajectory # points: {len(trajectory.points)}")
-simplifiedTrajectory1 = functions.douglasPeucker(trajectory, 0.0002)
-print(f"Simplified trajectory (epsilon=0.0002) # points: {len(simplifiedTrajectory1.points)}")
-simplifiedTrajectory2 = functions.douglasPeucker(trajectory, 1.0)
-print(f"Simplified trajectory (epsilon=1.0) # points: {len(simplifiedTrajectory2.points)}")
+origTrajectory = listOfTrajectories[40]
+print(f"Original trajectory #{origTrajectory.number}, point count: {len(origTrajectory.points)}")
+simplifiedTrajectory1 = functions.douglasPeucker(origTrajectory, 0.00001)
+print(f"Simplified trajectory (epsilon={0.00001}), point count: {len(simplifiedTrajectory1.points)}")
+simplifiedTrajectory2 = functions.douglasPeucker(origTrajectory, 0.0002)
+print(f"Simplified trajectory (epsilon={0.0002}), point count: {len(simplifiedTrajectory2.points)}")
 
 # Visualize original trajectory and its two simplifications
 colorMap = matplotlib.colormaps["viridis"]
 colors = [*map(colorMap, np.linspace(0, 1, 3))]
 
-plt.figure()
-plt.gca().set_aspect('equal', adjustable='box')
+figure = plt.figure()
 
-x = [point.x for point in trajectory.points]
-y = [point.y for point in trajectory.points]
+x = [point.x for point in origTrajectory.points]
+y = [point.y for point in origTrajectory.points]
 plt.plot(
     x,
     y,
     color=colors[0],
-    label=f"Trajectory {trajectory.number}",
+    label=f"Trajectory #{origTrajectory.number}",
 )
 x = [point.x for point in simplifiedTrajectory1.points]
 y = [point.y for point in simplifiedTrajectory1.points]
@@ -69,7 +69,7 @@ plt.plot(
     x,
     y,
     color=colors[1],
-    label=f"Trajectory {simplifiedTrajectory1.number} - epsilon=0.0002",
+    label=f"Trajectory #{simplifiedTrajectory1.number}, e={0.00001}",
 )
 x = [point.x for point in simplifiedTrajectory2.points]
 y = [point.y for point in simplifiedTrajectory2.points]
@@ -77,14 +77,16 @@ plt.plot(
     x,
     y,
     color=colors[2],
-    label=f"Trajectory {str(simplifiedTrajectory2.number)} - epsilon=1.0",
+    label=f"Trajectory #{str(simplifiedTrajectory2.number)}, e={0.0002}",
 )
 
-plt.title("Simplified Trajectories")
+plt.title("Simplified Trajectories - Douglas Peucker algorithm")
 plt.xlabel("x")
 plt.ylabel("y")
 plt.grid(True)
 plt.legend()
+plt.axis("equal")
+figure.tight_layout()
 plt.show(block=True)
 
 

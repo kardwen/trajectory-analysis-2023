@@ -50,6 +50,12 @@ def calculateDistance(point: Point, p1: Point, p2: Point) -> float:
     """Method to calculate the perpendicular distance between one point
     and a segment defined by two points"""
 
+    # Quick fix for this broken implementation
+    # to avoid division by zero
+    if p1.x == p2.x and p1.y == p2.y:
+        return pointDistance(point, p1)
+
+    # TODO fix this
     m = (p2.y - p1.y) / (p2.x - p1.x)
     a = m
     b = -1

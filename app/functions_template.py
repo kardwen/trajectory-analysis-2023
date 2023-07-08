@@ -9,12 +9,16 @@ def douglasPeucker(traj: Trajectory, epsilon: float) -> Trajectory:
     Returns a simplified trajectory with the same number attribute
     """
     points = traj.points
-    # Simply return invalid trajectories for now
+
+    # If the trajectory has less than two points,
+    # a trajectory is returned with unchanged points
     if len(points) < 2:
         return Trajectory(traj.number, traj.points)
+
     maxDist = 0
     index = 0
     end = len(points) - 1
+
     # Regard all points between the start and end point
     for i in range(1, end - 1):
         # Find the point furthest away from a straight line between start and end
@@ -38,6 +42,12 @@ def slidingWindow(traj: Trajectory, epsilon) -> Trajectory:
     Before Open Window algoritm
     """
     points = traj.points
+
+    # If the trajectory has less than two points,
+    # a trajectory is returned with unchanged points
+    if len(points) < 2:
+        return Trajectory(traj.number, traj.points)
+
     simplified = [points[0]]
     leftWindowBorder = 0  # anchor
     rightWindowBorder = 2

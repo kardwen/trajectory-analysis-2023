@@ -29,5 +29,5 @@ python main_template.py
 Run tests:
 
 ```
-python test.py
+pytest
 ```

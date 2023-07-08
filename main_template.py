@@ -10,8 +10,8 @@ import app.functions_template as functions
 
 
 # Import trajectories
-trajectories_dir = Path.cwd() / "data" / "trajectories"
-listOfTrajectories = utils.importTrajectories(str(trajectories_dir))
+trajectoriesDir = Path.cwd() / "data" / "trajectories"
+listOfTrajectories = utils.importTrajectories(str(trajectoriesDir))
 # print(listOfTrajectories)
 
 

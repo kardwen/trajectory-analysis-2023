@@ -33,8 +33,36 @@ def douglasPeucker(traj: Trajectory, epsilon: float) -> Trajectory:
 
 
 def slidingWindow(traj: Trajectory, epsilon) -> Trajectory:
-    # TODO
-    return Trajectory(0)
+    """
+    Returns a simplified trajectory with the same number attribute
+    Before Open Window algoritm
+    """
+    points = traj.points
+    simplified = [points[0]]
+    leftWindowBorder = 0  # anchor
+    rightWindowBorder = 2
+
+    while rightWindowBorder < len(points):
+        # Check if the maximal distance of each point of the window to the
+        # new segment that would be created by this window is smaller than epsilon
+        for j in range(leftWindowBorder + 1, rightWindowBorder):
+            dist = utils.calculateDistance(
+                points[j], points[leftWindowBorder], points[rightWindowBorder]
+            )
+            if dist > epsilon:
+                # Shift window
+                leftWindowBorder = rightWindowBorder - 1
+                simplified.append(points[rightWindowBorder - 1])
+                rightWindowBorder = leftWindowBorder + 2
+                break
+            if j == rightWindowBorder - 1:
+                # Extend window
+                rightWindowBorder += 1
+
+    # Always include the last point of the original trajectory
+    simplified.append(points[-1])
+
+    return Trajectory(traj.number, simplified)
 
 
 def closestPairDistance(traj0: Trajectory, traj1: Trajectory) -> float:

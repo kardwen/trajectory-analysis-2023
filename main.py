@@ -3,10 +3,10 @@ import numpy as np
 import matplotlib
 import matplotlib.pyplot as plt
 
+from app import functions
 from app.point import Point
 from app.region import Region
 from app import utils
-import app.functions_template as functions
 
 
 # Import trajectories

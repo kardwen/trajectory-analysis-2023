@@ -1,4 +1,4 @@
-from app import functions_template as functions
+from app import functions
 from app.point import Point
 from app.trajectory import Trajectory
 

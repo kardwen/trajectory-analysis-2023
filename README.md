@@ -23,7 +23,7 @@ pip install -r requirements.txt
 Run program:
 
 ```
-python main_template.py
+python main.py
 ```
 
 Run tests:

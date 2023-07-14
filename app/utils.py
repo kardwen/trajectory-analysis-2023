@@ -50,17 +50,18 @@ def calculateDistance(point: Point, p1: Point, p2: Point) -> float:
     """Method to calculate the perpendicular distance between one point
     and a segment defined by two points"""
 
-    # Quick fix for this broken implementation
-    # to avoid division by zero
+    # Identical line start and end points
     if p1.x == p2.x and p1.y == p2.y:
         return pointDistance(point, p1)
 
-    # TODO fix this
-    m = (p2.y - p1.y) / (p2.x - p1.x)
-    a = m
+    # Quick fix for "vertical" lines
+    slope = np.Infinity
+    if p1.x != p2.x:
+        slope = (p2.y - p1.y) / (p2.x - p1.x)
+
     b = -1
-    c = -(m * p1.x - p1.y)
-    d = abs((a * point.x + b * point.y + c)) / (math.sqrt(a * a + b * b))
+    c = -(slope * p1.x - p1.y)
+    d = abs((slope * point.x + b * point.y + c)) / (math.sqrt(slope * slope + b * b))
     # print("Perpendicular distance is ", d)
     return d
 

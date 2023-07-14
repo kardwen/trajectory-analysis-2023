@@ -1,3 +1,5 @@
+import numpy as np
+
 from app.trajectory import Trajectory
 from app.point import Point
 from app.region import Region
@@ -76,8 +78,17 @@ def slidingWindow(traj: Trajectory, epsilon) -> Trajectory:
 
 
 def closestPairDistance(traj0: Trajectory, traj1: Trajectory) -> float:
-    # TODO
-    return 0.0
+    """
+    Straight-forward implementation of the closest-pair distance measure
+    Returns inifinity for invalid trajectories
+    """
+    minDist = np.Infinity
+    for pointA in traj0.points:
+        for pointB in traj1.points:
+            dist = utils.pointDistance(pointA, pointB)
+            if dist < minDist:
+                minDist = dist
+    return minDist
 
 
 def dynamicTimeWarping(traj0: Trajectory, traj1: Trajectory) -> float:

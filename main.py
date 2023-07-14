@@ -37,7 +37,7 @@ plt.ylabel("y")
 plt.grid(True)
 plt.axis("equal")
 figure.tight_layout()
-plt.show(block=True)
+# plt.show(block=True)
 
 
 # Simplify at least one of the trajectories with Douglas Peucker
@@ -93,7 +93,7 @@ plt.grid(True)
 plt.legend()
 plt.axis("equal")
 figure.tight_layout()
-plt.show(block=True)
+# plt.show(block=True)
 
 
 # Sliding window algorithm
@@ -147,11 +147,23 @@ plt.grid(True)
 plt.legend()
 plt.axis("equal")
 figure.tight_layout()
-plt.show(block=True)
+# plt.show(block=True)
 
 
 # Calculate the distance between at least two trajectories with
-# Closest-Pair-Distance and/or Dynamic Time Warping
+# Closest-Pair-Distance and Dynamic Time Warping
+
+# Closest-Pair-Distance
+closestPairDist = functions.closestPairDistance(
+    listOfTrajectories[4], listOfTrajectories[5]
+)
+print(
+    f"The closest-pair distance between Trajectory #{listOfTrajectories[4].number}",
+    f"and Trajectory #{listOfTrajectories[5].number} is {closestPairDist}.",
+)
+
+# Dynamic Time Warping
+
 
 # Build R-tree with all given 62 trajectories
 
@@ -165,3 +177,6 @@ if foundTrajectories is not None:
         print("No trajectories match the query.")
     for t in foundTrajectories:
         print(t)
+
+
+plt.show(block=True)

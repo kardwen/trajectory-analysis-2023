@@ -11,13 +11,14 @@ Before you begin, ensure that you have Python 3.7 or newer installed on your sys
     ```
 
 2. Activate the virtual environment. This depends on your operating system:
-    - Linux/macOS:
+
+    * Linux/macOS:
 
         ```bash
         source venv/bin/activate
         ```
 
-    - Windows:
+    * Windows:
 
         ```cmd
         venv\Scripts\activate
@@ -44,6 +45,20 @@ Functions for trajectory analysis can be directly imported like this:
 ```Python
 from app.functions import *
 ```
+
+The ``scripts`` directory contains programs for testing smaller parts of the application. It might be necessary to set the ``PYTHONPATH`` variable like this (I hope it works for you):
+
+* Linux/macOS:
+
+    ```bash
+    export PYTHONPATH=/path/to/project/
+    ```
+
+* Windows:
+
+    ```cmd
+    set PYTHONPATH=c:\path\to\project
+    ```
 
 ## Testing
 

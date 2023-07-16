@@ -10,7 +10,6 @@ from app import utils
 # Import trajectories
 trajectoriesDir = Path.cwd() / "data" / "trajectories"
 listOfTrajectories = utils.importTrajectories(str(trajectoriesDir))
-# print(listOfTrajectories)
 
 
 # Simplify at least one of the trajectories with Douglas Peucker

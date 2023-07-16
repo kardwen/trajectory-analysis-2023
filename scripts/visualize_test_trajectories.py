@@ -1,17 +1,9 @@
-from pathlib import Path
 import numpy as np
 import matplotlib
 import matplotlib.pyplot as plt
 
 from app.trajectory import Trajectory
 from app.point import Point
-from app import utils
-
-
-# Import trajectories
-trajectoriesDir = Path.cwd() / "data" / "trajectories"
-listOfTrajectories = utils.importTrajectories(str(trajectoriesDir))
-# print(listOfTrajectories)
 
 
 # Visualize trajectories

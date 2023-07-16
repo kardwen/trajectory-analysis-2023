@@ -1,4 +1,4 @@
-from app import functions
+from app.functions import douglasPeucker
 from app.point import Point
 from app.trajectory import Trajectory
 
@@ -7,7 +7,7 @@ def testMinimalTrajectory():
     """
     Test that it can handle a trajectory only containing two points
     """
-    result = functions.douglasPeucker(
+    result = douglasPeucker(
         Trajectory(
             0,
             [
@@ -26,7 +26,7 @@ def testEmptyTrajectory():
     """
     Test that it can handle an empty trajectory
     """
-    result = functions.douglasPeucker(
+    result = douglasPeucker(
         Trajectory(0),
         1.0,
     )
@@ -37,7 +37,7 @@ def testTrajectoryWithCollinearPoints():
     """
     Test that it can handle a trajectory with collinear points
     """
-    result = functions.douglasPeucker(
+    result = douglasPeucker(
         Trajectory(
             0,
             [
@@ -60,7 +60,7 @@ def testTrajectoryWithCurvatureLargeEpsilon():
     """
     Test that it can handle a trajectory with curvature and large epsilon
     """
-    result = functions.douglasPeucker(
+    result = douglasPeucker(
         Trajectory(
             0,
             [
@@ -83,7 +83,7 @@ def testTrajectoryWithCurvatureSmallEpsilon():
     """
     Test that it can handle a trajectory with curvature and small epsilon
     """
-    result = functions.douglasPeucker(
+    result = douglasPeucker(
         Trajectory(
             0,
             [

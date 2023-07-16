@@ -102,5 +102,14 @@ def solveQueryWithRTree(r: Region, trajectories: list) -> list:
 
 
 def solveQueryWithoutRTree(r: Region, trajectories: list) -> list:
-    # TODO
-    return []
+    """
+    Returns all trajectories that have points that lie in a specific region
+    Straigh-forward implementation
+    """
+    queryResult = []
+    for trajectory in trajectories:
+        for point in trajectory.points:
+            if r.pointInRegion(point):
+                queryResult.append(trajectory)
+                break
+    return queryResult

@@ -3,10 +3,8 @@ import numpy as np
 import matplotlib
 import matplotlib.pyplot as plt
 
-from app import functions
 from app.trajectory import Trajectory
 from app.point import Point
-from app.region import Region
 from app import utils
 
 
@@ -38,19 +36,15 @@ testTrajectory2 = Trajectory(
 )
 
 figure = plt.figure()
-x = [point.x for point in testTrajectory1.points]
-y = [point.y for point in testTrajectory1.points]
 plt.plot(
-    x,
-    y,
+    [point.x for point in testTrajectory1.points],
+    [point.y for point in testTrajectory1.points],
     color=colors[0],
     label=f"Trajectory #{testTrajectory1.number}",
 )
-x = [point.x for point in testTrajectory2.points]
-y = [point.y for point in testTrajectory2.points]
 plt.plot(
-    x,
-    y,
+    [point.x for point in testTrajectory2.points],
+    [point.y for point in testTrajectory2.points],
     color=colors[0],
     label=f"Trajectory #{testTrajectory2.number}",
 )

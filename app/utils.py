@@ -26,7 +26,7 @@ def importTrajectory(filename: str, number: int) -> Trajectory:
         day = entry[2]
         hour = entry[3]
         timestamp = day + ":" + hour
-        newPoint = Point(x, y, timestamp)
+        newPoint = Point(x, y, timestamp, currTrajectory.number)
         currTrajectory.addPoint(newPoint)
 
     # Return trajectory

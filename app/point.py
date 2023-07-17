@@ -1,9 +1,10 @@
 class Point:
     # Initialization method of point with two coordinates x and y
-    def __init__(self, x: float, y: float, timestamp):
+    def __init__(self, x: float, y: float, timestamp, trajectoryNumber: int = None):
         self.x = x
         self.y = y
         self.timestamp = timestamp
+        self.trajectoryNumber = trajectoryNumber
 
     # Nice printing of point
     def __str__(self) -> str:

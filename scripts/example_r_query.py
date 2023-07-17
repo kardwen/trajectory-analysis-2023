@@ -3,7 +3,7 @@ from pathlib import Path
 from app import functions
 from app.point import Point
 from app.region import Region
-from app.r_tree import buildRTree
+from app.r_tree import RTree
 from app import utils
 
 
@@ -13,14 +13,15 @@ listOfTrajectories = utils.importTrajectories(str(trajectoriesDir))
 
 
 # Build R-tree with all given 62 trajectories
-rTree = buildRTree(listOfTrajectories)
+points = [trajectory.points for trajectory in listOfTrajectories]
+rTree = RTree(points)
 
 # Query the trajectories using the built R-tree and the region.
 # Which trajectories lie in the given region?
 # This query should return the trajectories with ids 43, 45, 50, 71, 83
 queryRegion = Region(Point(0.0012601754558545508, 0.0027251228043638775, 0.0), 0.00003)
 
-foundTrajectories = functions.solveQueryWithRTree(queryRegion, listOfTrajectories)
+foundTrajectories = functions.solveQueryWithRTree(queryRegion, listOfTrajectories, rTree)
 if len(foundTrajectories) > 0:
     for t in foundTrajectories:
         print(t)

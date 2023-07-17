@@ -1,20 +1,22 @@
-from app.trajectory import Trajectory
-
-
-def buildRTree(trajectories: list[Trajectory]):
-    """
-    Returns an R-Tree
-    """
-    rTree = RTree()
-    for trajectory in trajectories:
-        for point in trajectory.points:
-            # TODO Add point to RTree
-            pass
-    return rTree
+from app.point import Point
 
 
 class RTree:
-    def __init__(self):
+    """
+    Created after this blog post (https://www.bartoszsypytkowski.com/r-tree/)
+    """
+
+    def __init__(self, points: list[Point] = None):
+        if points is not None:
+            self.buildRTree(points)
+
+    def buildRTree(self, points: list[Point]):
+        """Builds the R-Tree from a list of points"""
+        for point in points:
+            self.insert(point)
+
+    def insert(self, point: Point):
+        """Inserts a single point in the R-Tree"""
         pass
 
 

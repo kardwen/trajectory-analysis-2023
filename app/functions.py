@@ -1,5 +1,6 @@
 import numpy as np
 
+from app.r_tree import RTree
 from app.trajectory import Trajectory
 from app.point import Point
 from app.region import Region
@@ -96,12 +97,19 @@ def dynamicTimeWarping(traj0: Trajectory, traj1: Trajectory) -> float:
     return 0.0
 
 
-def solveQueryWithRTree(r: Region, trajectories: list) -> list:
-    # TODO
+def solveQueryWithRTree(
+    r: Region, trajectories: list[Trajectory], rTree: RTree = None
+) -> list[Trajectory]:
+    # Builds an R-Tree if none is provided
+    if rTree is None:
+        points = [trajectory.point for trajectory in trajectories]
+        rTree = RTree(points)
+
+    # TODO query
     return []
 
 
-def solveQueryWithoutRTree(r: Region, trajectories: list) -> list:
+def solveQueryWithoutRTree(r: Region, trajectories: list) -> list[Trajectory]:
     """
     Returns all trajectories that have points that lie in a specific region
     Straigh-forward implementation

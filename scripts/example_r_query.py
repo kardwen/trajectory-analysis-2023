@@ -13,7 +13,10 @@ listOfTrajectories = utils.importTrajectories(str(trajectoriesDir))
 
 
 # Build R-tree with all given 62 trajectories
-points = [trajectory.points for trajectory in listOfTrajectories]
+points = []
+for trajectory in listOfTrajectories:
+    points.extend(trajectory.points)
+
 rTree = RTree(points)
 
 # Query the trajectories using the built R-tree and the region.

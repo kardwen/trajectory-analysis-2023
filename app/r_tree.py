@@ -23,16 +23,24 @@ class MBR:
         self.minY = minY
         self.maxY = maxY
 
-    def containsPoint(self, point: Point) -> bool:
-        return self.minX <= point.x <= self.maxX and self.minY <= point.y <= self.maxY
+    def contains(self, element) -> bool:
+        """
+        Checks if the MBR fully contains a Point or MBR element
 
-    def containsMBR(self, bRectangle: 'MBR') -> bool:
-        return (
-            self.minX <= bRectangle.minX
-            and bRectangle.maxX <= self.maxX
-            and self.minY <= bRectangle.minY
-            and bRectangle.maxY <= self.maxY
-        )
+        element: Point | MBR
+        """
+        if isinstance(element, Point):
+            return (
+                self.minX <= element.x <= self.maxX
+                and self.minY <= element.y <= self.maxY
+            )
+        if isinstance(element, MBR):
+            return (
+                self.minX <= element.minX
+                and element.maxX <= self.maxX
+                and self.minY <= element.minY
+                and element.maxY <= self.maxY
+            )
 
     def getArea(self) -> int:
         return abs(self.maxX - self.minX) * abs(self.maxY - self.minY)
@@ -48,19 +56,21 @@ class MBR:
         increase = newArea - self.getArea()
         return increase
 
-    def extend(self, point: Point):
-        """Extends the MBR so that it contains the new point"""
-        self.minX = min(self.minX, point.x)
-        self.maxX = max(self.maxX, point.x)
-        self.minY = min(self.minY, point.y)
-        self.maxY = max(self.maxY, point.y)
+    def extend(self, element):
+        """Extends the MBR so that it contains the new point or MBR
 
-    def merge(self, bRectangle: 'MBR'):
-        """Merges a second MBR so that it contains both MBRs"""
-        self.minX = min(self.minX, bRectangle.minX)
-        self.maxX = max(self.maxX, bRectangle.maxX)
-        self.minY = min(self.minY, bRectangle.minY)
-        self.maxY = max(self.maxY, bRectangle.maxY)
+        element: Point | MBR
+        """
+        if isinstance(element, Point):
+            self.minX = min(self.minX, element.x)
+            self.maxX = max(self.maxX, element.x)
+            self.minY = min(self.minY, element.y)
+            self.maxY = max(self.maxY, element.y)
+        if isinstance(element, MBR):
+            self.minX = min(self.minX, element.minX)
+            self.maxX = max(self.maxX, element.maxX)
+            self.minY = min(self.minY, element.minY)
+            self.maxY = max(self.maxY, element.maxY)
 
 
 class RTree:
@@ -115,27 +125,18 @@ class RTree:
                     minAreaIncrease = areaIncrease
             self.chooseLeaf(node.children[selectionIndex], point)
 
-    def updateMBRs(self, node: Node, extension: Point | MBR):
+    def updateMBRs(self, node: Node, element: Point | MBR):
         """
-        Check if the bounding box needs to be extended, recursively
-        calls itself on the parent node
+        Check if the bounding box needs to be extended,
+        recursively checks parent nodes
         """
+        # If no MBR is set, the root is reached
         if node.bRectangle is not None:
-            if isinstance(extension, Point):
-                if node.bRectangle.containsPoint(extension):
-                    # MBR does not need to be updated
-                    return
-                else:
-                    # Adjust MBR size
-                    node.bRectangle.extend(extension)
-            elif isinstance(extension, MBR):
-                if node.bRectangle.containsMBR(extension):
+            if node.bRectangle.contains(element):
                 # MBR does not need to be updated
-                    return
-                else:
-                    # Adjust MBR size
-                    node.bRectangle.merge(extension)
-
+                return
+            # Adjust MBR size
+            node.bRectangle.extend(element)
             if node.parent is not None:
                 # Continue with adjusting the size of the parent node
                 self.updateMBRs(node.parent, node.bRectangle)

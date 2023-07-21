@@ -26,8 +26,10 @@ foundTrajectories = functions.solveQueryWithRTree(
     queryRegion, rTree, listOfTrajectories
 )
 if len(foundTrajectories) > 0:
-    for t in foundTrajectories:
-        print(t)
+    print(
+        f"Found trajectories {[trajectory.number for trajectory in foundTrajectories]}",
+        "within region (search in R-Tree)",
+    )
 else:
     print("No trajectories match the query.")
 

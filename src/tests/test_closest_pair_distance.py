@@ -1,5 +1,6 @@
 import numpy as np
 from pytest import approx
+
 from app.functions import closestPairDistance
 from app.point import Point
 from app.trajectory import Trajectory

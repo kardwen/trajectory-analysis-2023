@@ -1,5 +1,6 @@
 import math
 from glob import glob
+
 import numpy as np
 
 from app.point import Point

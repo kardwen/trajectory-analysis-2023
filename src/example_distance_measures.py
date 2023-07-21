@@ -1,7 +1,6 @@
 from pathlib import Path
-from app import functions
-from app import utils
 
+from app import functions, utils
 
 # Import trajectories
 trajectoriesDir = Path.cwd() / "data" / "trajectories"

@@ -1,10 +1,9 @@
-import numpy as np
 import matplotlib
 import matplotlib.pyplot as plt
+import numpy as np
 
-from app.trajectory import Trajectory
 from app.point import Point
-
+from app.trajectory import Trajectory
 
 # Visualize trajectories
 colorMap = matplotlib.colormaps["viridis"]

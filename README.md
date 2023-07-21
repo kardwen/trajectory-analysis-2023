@@ -37,28 +37,16 @@ Before you begin, ensure that you have Python 3.7 or newer installed on your sys
 To run the program, execute the following command:
 
 ```bash
-python main.py
+python src/main.py
 ```
 
-Functions for trajectory analysis can be directly imported like this:
+In the ``src`` directory you can find the package ``app`` which implements core functionalities for reading and analysing trajectories. Included in ``src`` are also scripts with examples for specific functions.
+
+Functions can be imported like this:
 
 ```Python
 from app.functions import *
 ```
-
-The ``scripts`` directory contains programs for testing smaller parts of the application. It might be necessary to set the ``PYTHONPATH`` variable like this (I hope it works for you):
-
-* Linux/macOS:
-
-    ```bash
-    export PYTHONPATH=/path/to/project/
-    ```
-
-* Windows:
-
-    ```cmd
-    set PYTHONPATH=c:\path\to\project
-    ```
 
 ## Testing
 

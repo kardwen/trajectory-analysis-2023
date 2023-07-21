@@ -1,10 +1,10 @@
 import numpy as np
 
-from app.r_tree import RTree
-from app.trajectory import Trajectory
-from app.point import Point
-from app.region import Region
 from app import utils
+from app.point import Point
+from app.r_tree import RTree
+from app.region import Region
+from app.trajectory import Trajectory
 
 
 def douglasPeucker(traj: Trajectory, epsilon: float) -> Trajectory:

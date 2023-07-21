@@ -1,10 +1,10 @@
 from pathlib import Path
-import numpy as np
+
 import matplotlib
 import matplotlib.pyplot as plt
+import numpy as np
 
 from app import utils
-
 
 # Import trajectories
 trajectoriesDir = Path.cwd() / "data" / "trajectories"

@@ -24,7 +24,7 @@ rTree = RTree(points)
 # This query should return the trajectories with ids 43, 45, 50, 71, 83
 queryRegion = Region(Point(0.0012601754558545508, 0.0027251228043638775, 0.0), 0.00003)
 
-foundTrajectories = functions.solveQueryWithRTree(queryRegion, listOfTrajectories, rTree)
+foundTrajectories = functions.solveQueryWithRTree(queryRegion, rTree, listOfTrajectories)
 if len(foundTrajectories) > 0:
     for t in foundTrajectories:
         print(t)

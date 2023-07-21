@@ -98,12 +98,12 @@ def dynamicTimeWarping(traj0: Trajectory, traj1: Trajectory) -> float:
 
 
 def solveQueryWithRTree(
-    r: Region, trajectories: list[Trajectory], rTree: RTree = None
+    r: Region, tree: RTree, trajectories: list[Trajectory]
 ) -> list[Trajectory]:
     # Builds an R-Tree if none is provided
-    if rTree is None:
+    if tree is None:
         points = [trajectory.point for trajectory in trajectories]
-        rTree = RTree(points)
+        tree = RTree(points)
 
     # TODO query
     return []

@@ -9,8 +9,8 @@ from app import utils
 # Import trajectories
 trajectoriesDir = Path.cwd() / "data" / "trajectories"
 listOfTrajectories = utils.importTrajectories(str(trajectoriesDir))
+# print(listOfTrajectories)
 
-# TODO Implement UI with tkinter
 
 # Visualize trajectories
 colorMap = matplotlib.colormaps["viridis"]

@@ -13,7 +13,7 @@ listOfTrajectories = utils.importTrajectories(str(trajectoriesDir))
 
 
 # Build R-tree with all given 62 trajectories
-with Timer(text="Build R-tree in {:.4f} seconds"):
+with Timer(text="Built R-tree in {:.4f} seconds."):
     points = []
     for trajectory in listOfTrajectories:
         points.extend(trajectory.points)
@@ -33,7 +33,7 @@ with Timer(text="Queried points with R-tree in {:.4f} seconds."):
 if len(foundTrajectories) > 0:
     print(
         f"Found trajectories {[trajectory.number for trajectory in foundTrajectories]}",
-        "within region (search in R-tree)",
+        "within region (search in R-tree).",
     )
 else:
     print("No trajectories match the query.")
@@ -46,7 +46,7 @@ with Timer(text="Queried points without R-tree in {:.4f} seconds."):
 if len(foundTrajectories) > 0:
     print(
         f"Found trajectories {[trajectory.number for trajectory in foundTrajectories]}",
-        "within region",
+        "within region.",
     )
 else:
     print("No trajectories match the query.")

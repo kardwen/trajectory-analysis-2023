@@ -5,12 +5,17 @@ from app.point import Point
 
 class Node:
     """
-    Node
+    Node in an R-tree
 
     If a node is a leaf, it contains points as children.
     """
 
     def __init__(self, isLeaf: bool):
+        """
+        Initialize a Node
+
+            isLeaf: True if the node is a leaf node, False otherwise.
+        """
         self.isLeaf: bool = isLeaf
         self.children: list[Node | Point] = []
         self.parent: Node = None
@@ -24,20 +29,25 @@ class Node:
         if self.isLeaf:  # Calculate MBR of all points
             minX = min(point.x for point in self.children)
             maxX = max(point.x for point in self.children)
-            minX = min(point.y for point in self.children)
+            minY = min(point.y for point in self.children)
             maxY = max(point.y for point in self.children)
         else:  # Calculate MBR from child nodes MBR
             minX = min(node.mbr.minX for node in self.children)
             maxX = max(node.mbr.maxX for node in self.children)
-            minX = min(node.mbr.minY for node in self.children)
+            minY = min(node.mbr.minY for node in self.children)
             maxY = max(node.mbr.maxY for node in self.children)
-        self.mbr = MBR(minX, maxX, minX, maxY)
+        self.mbr = MBR(minX, maxX, minY, maxY)
 
 
 class MBR:
-    """Minimum Bounding Rectangle"""
+    """
+    Minimum Bounding Rectangle (MBR) for points or nodes in the R-tree.
+    """
 
     def __init__(self, minX, maxX, minY, maxY):
+        """
+        Initialize a Minimum Bounding Rectangle (MBR)
+        """
         self.minX = minX
         self.maxX = maxX
         self.minY = minY
@@ -45,9 +55,9 @@ class MBR:
 
     def contains(self, element) -> bool:
         """
-        Checks if the MBR fully contains a Point or MBR element
+        Checks if the MBR fully contains a point or MBR element
 
-        element: Point | MBR
+            element: Point | MBR
         """
         if isinstance(element, Point):
             return (
@@ -63,6 +73,7 @@ class MBR:
             )
 
     def getArea(self) -> int:
+        """Returns the area of the MRB"""
         return abs(self.maxX - self.minX) * abs(self.maxY - self.minY)
 
     def calculateAreaIncrease(self, point: Point):
@@ -95,7 +106,7 @@ class MBR:
 
 class RTree:
     """
-    R-Tree
+    R-tree
 
     Sources:
         (https://www.youtube.com/watch?v=hUIHtPLL940)
@@ -107,6 +118,11 @@ class RTree:
     maxEntries: int = 5
 
     def __init__(self, points: list[Point] = None):
+        """
+        Initialize an R-Tree
+
+            points: Optional list of points to build the R-Tree from.
+        """
         self.root = Node(True)
         if points is not None:
             # Build the R-Tree from a list of points
@@ -115,7 +131,7 @@ class RTree:
 
     def insert(self, point: Point):
         """Inserts a single point in the R-Tree"""
-        # Choose leaf
+        # Choose a leaf for adding the new point
         leaf: Node = self.chooseLeaf(self.root, point)
         if len(leaf.children) < self.maxEntries:
             # Leaf can be extended
@@ -133,7 +149,6 @@ class RTree:
             return node
         else:
             # Search for MBR that requires the least MBR area increase
-            # TODO when area is equal, choose smallest area MBR
             minAreaIncrease = math.inf
             selectionIndex = 0
             for i, child in enumerate(node.children):
@@ -141,20 +156,22 @@ class RTree:
                 if areaIncrease < minAreaIncrease:
                     selectionIndex = i
                     minAreaIncrease = areaIncrease
+            # TODO Possible improvement for the rare case that the area is equal
+            # would be to choose the smallest area
             return self.chooseLeaf(node.children[selectionIndex], point)
 
     def splitNode(self, node: Node, element: Point | Node):
         """
         Splits a node by assigning parts of its children to a newly created node
-        and inserting a new node
+        and inserting it
         """
         if len(node.children) < self.maxEntries:
-            # no split needed, simply update children and MBR
+            # No split needed, simply update children and MBR
             node.children.append(element)
             self.adjustTree(node, element)
             return
 
-        # If the root node needs to be split a new root has to be created
+        # If the root node needs to be split, a new root has to be created
         if not node.parent:
             root = Node(False)
             node.parent = root
@@ -162,32 +179,41 @@ class RTree:
             root.children.append(node)
 
         # Linear split of children in the middle for now
-        # TODO implement quadratic cost function
+        # TODO Implement a more advanced quadratic cost function
+        # for choosing on how to assign nodes or points to new nodes
         splitIndex = len(node.children) // 2
         # Create a new node
         newNode = Node(node.isLeaf)
         newNode.children = node.children[splitIndex:]
+        # Update parent node references
         for child in newNode.children:
             child.parent = newNode
         newNode.parent = node.parent
-        # Update existing node
+        # Update the existing node children
         node.children = node.children[:splitIndex]
-        # Update MBR
+        # Update MBRs
         node.updateMBR()
         newNode.updateMBR()
 
         # Add new element to one of the two nodes
-        # TODO choose best node for adding element (in quadratic cost function)
+        # TODO Choose a suited node for adding the new element (also in the quadratic cost function)
         node.children.append(element)
+        # If the added element is a node, also update its parent reference
         if isinstance(element, Node):
-            # if the added element is a node, also update its parent reference
             element.parent = node
-        node.updateMBR()
+        self.adjustTree(node, element)
 
         # Register the new node in the parent node
         self.splitNode(node.parent, newNode)
 
     def quadraticCost(self):
+        """Quadratic cost function
+        
+        Optimizes the splitting of nodes so that the resulting R-tree
+        is more efficient
+        
+        Not implemented yet
+        """
         # TODO
         # if node.isLeaf:
         #     # Choose two nodes that would cause the largest area as starting nodes
@@ -213,8 +239,8 @@ class RTree:
         Check if the bounding box needs to be extended,
         recursively checks parent nodes
         """
+        # Calculate MBR if none is set, which is the case for the root node
         if not node.mbr:
-            # Calculate MBR if none is set, which is the case for the root
             node.updateMBR()
             return
         # MBR does not need to be updated if the element is already contained
@@ -222,6 +248,6 @@ class RTree:
             return
         # Update MBR
         node.updateMBR()
-        # Continue with adjusting the parent node
+        # Continue with adjusting the MBR of the parent node
         if node.parent is not None:
             self.adjustTree(node.parent, node.mbr)

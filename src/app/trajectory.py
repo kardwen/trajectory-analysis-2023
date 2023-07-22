@@ -13,7 +13,7 @@ class Trajectory:
 
         """
         self.number = number
-        self.points = []
+        self.points: list[Point] = []
         if points is not None:
             for point in points:
                 # The trajectory number of the point is updated

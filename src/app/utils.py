@@ -69,6 +69,5 @@ def calculateDistance(point: Point, p1: Point, p2: Point) -> float:
 
 def pointDistance(p0: Point, p1: Point) -> float:
     """Calculate euclidean distance between two given points"""
-
     dist = math.sqrt((p0.x - p1.x) ** 2 + (p0.y - p1.y) ** 2)
     return dist

@@ -20,4 +20,8 @@ print(
 )
 
 # Dynamic Time Warping
-# TODO
+dtwDist = functions.dynamicTimeWarping(listOfTrajectories[4], listOfTrajectories[5])
+print(
+    f"The Dynamic Time Warping distance between Trajectory #{listOfTrajectories[4].number}",
+    f"and Trajectory #{listOfTrajectories[5].number} is {dtwDist}.",
+)

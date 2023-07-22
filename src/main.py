@@ -174,7 +174,7 @@ preprocessing_label.pack(side=tk.TOP, padx=10, pady=5, anchor="w")
 data_reduction_checkbox_var = tk.BooleanVar()
 data_reduction_checkbox = ttk.Checkbutton(
     listbox_frame,
-    text="Enable Data Reduction",
+    text="Simplify Trajectories",
     variable=data_reduction_checkbox_var,
     command=update_plot,
 )

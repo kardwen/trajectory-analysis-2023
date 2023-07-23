@@ -1,5 +1,9 @@
 # trajectory-analysis-2023
 
+Project by Hamidreza Behbood, Arsalan Razavi and Karl Felix Schewe for the 2023 course Trajectory Analysis at the University of Münster.
+
+![UI in main.py](assets/main_app.png)
+
 ## Installation
 
 Before you begin, ensure that you have Python 3.7 or newer installed on your system.

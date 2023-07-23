@@ -111,12 +111,10 @@ def update_plot():
                 color=color,
                 label=f"Trajectory {traj.number}",
             )
-
+ 
     axis.set_xlabel("x")
     axis.set_ylabel("y")
     axis.grid(True)
-    axis.axis("equal")
-    figure.tight_layout()
     figure.canvas.draw()
 
 
@@ -302,7 +300,8 @@ plot_frame.pack(side=tk.LEFT, padx=10, pady=5, fill=tk.BOTH, expand=True)
 # Create a matplotlib figure and axis for the plot
 figure = plt.figure(figsize=(6, 4), dpi=100)
 axis = figure.add_subplot(1, 1, 1)
-
+axis.axis("equal")
+figure.tight_layout()
 
 # Bind the algorithm variable's Configure event to the on_algorithm_select function
 algorithm_var.trace("w", on_algorithm_select)

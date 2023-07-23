@@ -1,7 +1,6 @@
 import numpy as np
 
 from app import utils
-from app.point import Point
 from app.r_tree import Node, RTree
 from app.region import Region
 from app.trajectory import Trajectory
@@ -96,7 +95,6 @@ def dynamicTimeWarping(traj0: Trajectory, traj1: Trajectory) -> float:
     """
     Dynamic Time Warping distance measure between two trajectories
     """
-    # TODO
     points0 = traj0.points
     points1 = traj1.points
 
@@ -104,31 +102,31 @@ def dynamicTimeWarping(traj0: Trajectory, traj1: Trajectory) -> float:
     if not points0 or not points1:
         return np.Infinity
 
-    # Calculate the distance matrix
+    # Distance matrix
     distMatrix = np.zeros((len(points0), len(points1)))
     for i, _ in enumerate(points0):
         for j, _ in enumerate(points1):
             distMatrix[i, j] = utils.pointDistance(points0[i], points1[j])
 
-    # Create a DP table to store the cumulative distances
-    dp = np.zeros((len(points0), len(points1)))
-    dp[0, 0] = distMatrix[0, 0]
+    # Dynamic time warping matrix for cumulative distances
+    dtwMatrix = np.zeros((len(points0), len(points1)))
+    dtwMatrix[0, 0] = distMatrix[0, 0]
 
-    # Initialize the first row and column of the DP table
+    # Initialize the first row and column of the DTW matrix
     for i in range(1, len(points0)):
-        dp[i, 0] = dp[i - 1, 0] + distMatrix[i, 0]
+        dtwMatrix[i, 0] = dtwMatrix[i - 1, 0] + distMatrix[i, 0]
     for j in range(1, len(points1)):
-        dp[0, j] = dp[0, j - 1] + distMatrix[0, j]
+        dtwMatrix[0, j] = dtwMatrix[0, j - 1] + distMatrix[0, j]
 
-    # Fill in the rest of the DP table
+    # Fill in the rest of the DTW matrix
     for i in range(1, len(points0)):
         for j in range(1, len(points1)):
-            dp[i, j] = distMatrix[i, j] + min(
-                dp[i - 1, j], dp[i, j - 1], dp[i - 1, j - 1]
+            dtwMatrix[i, j] = distMatrix[i, j] + min(
+                dtwMatrix[i - 1, j], dtwMatrix[i, j - 1], dtwMatrix[i - 1, j - 1]
             )
 
-    # The DTW distance is the value in the bottom-right cell of the DP table
-    dtwDistance = dp[-1, -1]
+    # The DTW distance is the value in the bottom-right cell of the DTW matrix
+    dtwDistance = dtwMatrix[-1, -1]
 
     return dtwDistance
 

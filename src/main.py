@@ -24,23 +24,18 @@ trajectoriesDir = Path.cwd() / "data" / "trajectories"
 listOfTrajectories = utils.importTrajectories(str(trajectoriesDir))
 
 
-# Function to update the plot with selected trajectories and points highlight
+# Called when updating
 def update_plot():
     selected_trajectory_ids = []
     for idx in listbox.curselection():
         item = listbox.get(idx)
-        trajectory_number = int(
-            item.split()[-1]
-        )  # Extract the numeric part of the string
+        # Extract the numeric part of the string
+        trajectory_number = int(item.split()[-1])
         selected_trajectory_ids.append(trajectory_number)
-    highlight_points = (
-        highlight_checkbox_var.get()
-    )  # Get the state of the highlight checkbox
+    highlight_points = highlight_checkbox_var.get()
     axis.clear()
 
-    increase_contrast = (
-        contrast_checkbox_var.get()
-    )  # Get the state of the highlight checkbox
+    increase_contrast = contrast_checkbox_var.get()
 
     if increase_contrast:
         color_list = [
@@ -111,7 +106,7 @@ def update_plot():
                 color=color,
                 label=f"Trajectory {traj.number}",
             )
- 
+
     axis.set_xlabel("x")
     axis.set_ylabel("y")
     axis.grid(True)
@@ -142,7 +137,7 @@ def deselect_all_trajectories():
     update_plot()
 
 
-# Function to handle epsilon entry change event
+# Function to handle event when epsilon is changed
 def on_epsilon_change(*args):
     try:
         # Try converting the entered value to a float
@@ -153,7 +148,6 @@ def on_epsilon_change(*args):
         update_plot()
     except ValueError:
         epsilon_label.configure(foreground="red")
-        pass
 
 
 # Function to handle algorithm selection change event
@@ -176,7 +170,7 @@ root = tk.Tk()
 root.title("Trajectory Visualization")
 root.geometry("1200x750")
 
-# Create a frame to contain the listbox
+# Sidebar frame
 sidebar_frame = ttk.Frame(root)
 sidebar_frame.pack(side=tk.LEFT, padx=10, pady=5, fill=tk.BOTH)
 
@@ -186,17 +180,17 @@ sidebar_frame.update()  # Ensure widgets are drawn before setting the minsize
 sidebar_frame.pack_propagate(False)
 sidebar_frame.config(width=max(sidebar_frame.winfo_reqwidth(), 180))
 
-# Create a Label for trajectory number
+# Colormap for trajectory colors
+colorMap = matplotlib.colormaps["viridis"]
+
+# Label for trajectory listbox
 label_trajectory_number = ttk.Label(sidebar_frame, text="Trajectories:")
 label_trajectory_number.pack(side=tk.TOP, padx=10, pady=(10, 0), anchor="w")
-
-# Initial plot with all trajectories and points highlighted
-colorMap = matplotlib.colormaps["viridis"]
 
 listbox_frame = ttk.Frame(sidebar_frame)
 listbox_frame.pack(side=tk.TOP, padx=0, pady=0, fill=tk.BOTH)
 
-# Create a Listbox to select multiple trajectory IDs and display colors
+# Listbox for selecting multiple trajectories that functions as legend
 listbox = tk.Listbox(listbox_frame, selectmode=tk.MULTIPLE, height=15)
 for i, origTrajectory in enumerate(listOfTrajectories):
     listbox.insert(tk.END, f"Trajectory {origTrajectory.number}")
@@ -208,13 +202,12 @@ select_all_button = ttk.Button(
     sidebar_frame, text="Select All", command=select_all_trajectories
 )
 select_all_button.pack(side=tk.TOP, padx=10, pady=(0, 5), fill=tk.X)
-
 deselect_all_button = ttk.Button(
     sidebar_frame, text="Deselect All", command=deselect_all_trajectories
 )
 deselect_all_button.pack(side=tk.TOP, padx=10, pady=(0, 5), fill=tk.X)
 
-# Create a checkbox for increasing contrast
+# Checkbox for increasing contrast
 contrast_checkbox_var = tk.BooleanVar(value=True)
 contrast_checkbox = ttk.Checkbutton(
     sidebar_frame,
@@ -224,7 +217,7 @@ contrast_checkbox = ttk.Checkbutton(
 )
 contrast_checkbox.pack(side=tk.TOP, padx=10, pady=5, fill=tk.X)
 
-# Create a checkbox to toggle point highlighting
+# Checkbox for point highlighting
 highlight_checkbox_var = tk.BooleanVar()
 highlight_checkbox = ttk.Checkbutton(
     sidebar_frame,
@@ -234,7 +227,7 @@ highlight_checkbox = ttk.Checkbutton(
 )
 highlight_checkbox.pack(side=tk.TOP, padx=10, pady=5, fill=tk.X)
 
-# Create a horizontal line below "Highlight Points"
+# Separator
 preprocessing_separator = ttk.Separator(sidebar_frame, orient="horizontal")
 preprocessing_separator.pack(side=tk.TOP, fill=tk.X, padx=10, pady=5)
 
@@ -242,7 +235,7 @@ preprocessing_separator.pack(side=tk.TOP, fill=tk.X, padx=10, pady=5)
 preprocessing_label = ttk.Label(sidebar_frame, text="Preprocessing")
 preprocessing_label.pack(side=tk.TOP, padx=10, pady=5, anchor="w")
 
-# Apply algorithm checkbox
+# Checkbox for simplification
 data_reduction_checkbox_var = tk.BooleanVar()
 data_reduction_checkbox = ttk.Checkbutton(
     sidebar_frame,
@@ -275,9 +268,11 @@ epsilon_entry = ttk.Entry(sidebar_frame)
 epsilon_entry.pack(side=tk.TOP, padx=10, pady=5, fill=tk.X)
 epsilon_entry.insert(0, "0.00005")  # Default epsilon value
 
+# Separator
 distance_metrics_separator = ttk.Separator(sidebar_frame, orient="horizontal")
 distance_metrics_separator.pack(side=tk.TOP, fill=tk.X, padx=10, pady=5)
 
+# Distance measures
 distance_metrics_label = ttk.Label(sidebar_frame, text="Distance Metrics")
 distance_metrics_label.pack(side=tk.TOP, padx=10, pady=5, anchor="w")
 
@@ -303,27 +298,23 @@ axis = figure.add_subplot(1, 1, 1)
 axis.axis("equal")
 figure.tight_layout()
 
-# Bind the algorithm variable's Configure event to the on_algorithm_select function
-algorithm_var.trace("w", on_algorithm_select)
-
-# Bind the KeyRelease event to the on_epsilon_change function
-epsilon_entry.bind("<KeyRelease>", on_epsilon_change)
-
-# Bind the listbox select event to the on_listbox_select function
-listbox.bind("<<ListboxSelect>>", on_listbox_select)
-
 # Embed the matplotlib figure in the Tkinter window
 canvas = FigureCanvasTkAgg(figure, master=plot_frame)
 canvas.draw()
 canvas.get_tk_widget().pack(side=tk.TOP, fill=tk.BOTH, expand=True)
 
-# Create a Navigation Toolbar for zooming, panning, and saving
+# Add Navigation Toolbar
 toolbar = NavigationToolbar2Tk(canvas, plot_frame)
 toolbar.pan()
 toolbar.update()  # Required to initialize the toolbar
 toolbar.pack(side=tk.BOTTOM, fill=tk.X)
 
-# Initial plot with all trajectories and points highlighted
+# Event binding
+algorithm_var.trace("w", on_algorithm_select)
+epsilon_entry.bind("<KeyRelease>", on_epsilon_change)
+listbox.bind("<<ListboxSelect>>", on_listbox_select)
+
+# Initial plot with all trajectories
 select_all_trajectories()
 
 # Bind the "WM_DELETE_WINDOW" event to the on_closing function

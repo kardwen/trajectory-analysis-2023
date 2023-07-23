@@ -108,10 +108,10 @@ def dynamicTimeWarping(traj0: Trajectory, traj1: Trajectory) -> float:
         for j, _ in enumerate(points1):
             distMatrix[i, j] = utils.pointDistance(points0[i], points1[j])
 
-    # Dynamic time warping matrix for cumulative distances
+    # Dynamic time warping matrix
     dtwMatrix = np.zeros((len(points0) + 1, len(points1) + 1))
 
-    # Initialize the first row and column of the DTW matrix
+    # Initializiation of the DTW matrix
     dtwMatrix[0, 0] = 0.0
     for i in range(1, len(points0)):
         dtwMatrix[i, 0] = np.Infinity
@@ -119,9 +119,9 @@ def dynamicTimeWarping(traj0: Trajectory, traj1: Trajectory) -> float:
         dtwMatrix[0, j] = np.Infinity
 
     # Fill in the rest of the DTW matrix
-    for i in range(1, len(points0)):
-        for j in range(1, len(points1)):
-            dtwMatrix[i, j] = distMatrix[i, j] + min(
+    for i in range(1, len(points0) + 1):
+        for j in range(1, len(points1) + 1):
+            dtwMatrix[i, j] = distMatrix[i - 1, j - 1] + min(
                 dtwMatrix[i - 1, j], dtwMatrix[i, j - 1], dtwMatrix[i - 1, j - 1]
             )
 

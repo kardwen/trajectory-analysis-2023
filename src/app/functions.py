@@ -22,7 +22,7 @@ def douglasPeucker(traj: Trajectory, epsilon: float) -> Trajectory:
     end = len(points) - 1
 
     # Regard all points between the start and end point
-    for i in range(1, end - 1):
+    for i in range(1, end):
         # Find the point furthest away from a straight line between start and end
         dist = utils.calculateDistance(points[i], points[0], points[end])
         if dist > maxDist:
